@@ -14,7 +14,11 @@
 <details>
 
   <summary>Staking</summary>
-
-✔️✅❌
+✔️
+✅
+❌
+| Project                                       | Wallet              | Notes     |
+| :--------                                     | :--------           | :-------- |
+[Black Panther](https://hub.blackpanther.fi/stake)
 
 </details>
