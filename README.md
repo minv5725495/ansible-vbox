@@ -19,6 +19,6 @@
 
 | Project                                       | Wallet              | Notes     |
 | :--------                                     | :--------           | :-------- |
-[Black Panther](https://hub.blackpanther.fi/stake)
+[Black Panther](https://hub.blackpanther.fi/stake) | pic16f874
 
 </details>
