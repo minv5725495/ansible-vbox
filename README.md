@@ -1,6 +1,4 @@
-<details>
-
-  <summary>DAILY</summary>
+# Daily
 
 | Project                                       | Wallet              | Notes     |
 | :--------                                     | :--------           | :-------- |
@@ -12,6 +10,11 @@
 [kinetics kava]
 |                                               |                     | 
   
-</details>
+
+<details>
+
+  <summary>Staking</summary>
 
 ✔️✅❌
+
+</details>
