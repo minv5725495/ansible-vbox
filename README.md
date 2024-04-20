@@ -21,7 +21,7 @@
 
 | Project                                       | Wallet - Acc        | Notes
 | :------------------------------------         |     :---            |          ---: |
-|                                               |                     |       
+| [stake.altlayer.io](https://stake.altlayer.io/)                                              |                     |       
 | [Pryzm.zone](https://airdrop.pryzm.zone/)                       
 |                                               |                     |       
 | [BlackPanter](https://dojo.trading/atomic)    |      pic16f874                           
