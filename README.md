@@ -19,20 +19,21 @@
 
   <summary> Staking </summary>
 
-| Project                                       | Wallet - Acc        | Notes
-| :------------------------------------         |     :---            |          ---: |
-| [stake.altlayer.io](https://stake.altlayer.io/)                                              |                     |       
+| Project                                       | Wallet - Acc        | Notes | Notes | Notes | 
+| :------------------------------------         |     :---            |  ---: |  ---: |  ---: |
+| [stake.altlayer.io](https://stake.altlayer.io/)                           
 | [Pryzm.zone](https://airdrop.pryzm.zone/)                       
-|                                               |                     |       
-| [BlackPanter](https://dojo.trading/atomic)    |      pic16f874                           
-|                                               |                     |       
-|                                               |                     |       
-| [LightLink](https://galxe.com/lightlink)      | FFox MMsk  | Pyth + Tia      
-| [LightLink](https://twitter.com/LightLinkChain/status/1754686450954863029) | twitter
-|                                               |                     |     
-| NIM                                           |                     | DYM    
-|                                               |                     |     
+|                                               |                    
+| [BlackPanter](https://dojo.trading/atomic)    |      pic16f874                 
+|                                               |                    
+|                                               |                    
+| [LightLink](https://galxe.com/lightlink)      | FFox MMsk  | Pyth + Tia      |
+| [LightLink](https://twitter.com/LightLinkChain/status/1754686450954863029) | twitter |
+|                                               |                     |     |
+| NIM                                           |                     | DYM |  
+|                                               |                     |     |
 | [Aigisos DefiGeek](https://www.youtube.com/watch?v=PCYosQIXQeQ) | [Aigisos Discord](https://discord.gg/eECqtybMGZ) | [Aigisos Twitter](https://x.com/aigisos) | [Aigisos Medium](https://aigisos.medium.com/aigisos-genesis-rolldrop-8de869192404) |
+|                                               |                     |       |       |       |
 
 </details>
 
