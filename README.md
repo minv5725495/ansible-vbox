@@ -32,6 +32,8 @@
 |                                               |                     |     
 | NIM                                           |                     | DYM    
 |                                               |                     |     
+| [Aigisos Twitter](https://x.com/aigisos)                                             |                     |     
+| [Aigisos Medium](https://aigisos.medium.com/aigisos-genesis-rolldrop-8de869192404)                                             |                     |     
 
 </details>
 
