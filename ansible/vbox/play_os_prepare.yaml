@@ -1,0 +1,12 @@
+- name: Prepare OS
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install
+      ansible.builtin.include_tasks: tasks/os_prepare/VboxGuestAdditionInstall.yml
+    - name: system
+      ansible.builtin.include_tasks: tasks/os_prepare/system.yml
+    - name: users
+      ansible.builtin.include_tasks: tasks/os_prepare/users.yml
+#    - name: common_pckgs
+#      ansible.builtin.include_tasks: tasks/os_prepare/common_pckgs.yml

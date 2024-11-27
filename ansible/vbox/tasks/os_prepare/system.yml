@@ -1,0 +1,19 @@
+#- name: system | disable root login over SSH
+#  ansible.builtin.lineinfile:
+#    dest: '/etc/ssh/sshd_config'
+#    regexp: '^PermitRootLogin'
+#    line: 'PermitRootLogin no'
+#    state: present
+
+#- name: system | disable password login
+#  ansible.builtin.lineinfile:
+#    dest: '/etc/ssh/sshd_config'
+#    regexp: '^PasswordAuthentication'
+#    line: 'PasswordAuthentication no'
+#    state: present
+
+
+- name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2
+  ansible.builtin.unarchive:
+    src: "files/UA2-xfce-theme.tar.gz"
+    dest: "/usr/share/themes/"

@@ -1,0 +1,5 @@
+ubuntu_usr_pwd: "{{ vault_ubuntu_usr_pwd }}"
+sysusers: "{{ vault_sysusers }}"
+
+virtualbox_version: "auto"
+ISO_path: '/dev/cdrom'

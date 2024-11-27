@@ -1,0 +1,125 @@
+# ---
+# # defaults file for virtualbox-guest
+# virtualbox_iso: /root/VBoxGuestAdditions.iso
+# virtualbox_os_packages:
+#   - virtualbox-guest-additions-iso
+#   - virtualbox-guest-dkms
+#   - virtualbox-guest-source
+#   - virtualbox-guest-utils
+#   - virtualbox-guest-x11
+# virtualbox_remove_os_packages: false
+# virtualbox_version: auto
+
+# tasks file for virtualbox-guest
+- name: Remove OS installation of virtualbox guest additions
+  package:
+    name: "{{ virtualbox_os_packages }}"
+    state: absent
+  when: virtualbox_remove_os_packages is defined and virtualbox_remove_os_packages
+
+- block:
+    - name: Determine the host version
+      ansible.builtin.shell:  "VBoxManage --version | awk -F'[r_]' '{print $1}'"
+      delegate_to: localhost
+      register: host_vbox_version
+      become: no
+
+    - name: Check if virtualbox_version could be determined
+      ansible.builtin.fail:
+        msg: "Could not determine virtualbox_version - please specify this variable"
+      when: not host_vbox_version.stdout
+
+    - name: Override virtualbox_version if defaults set to auto
+      ansible.builtin.set_fact:
+        virtualbox_version: "{{ host_vbox_version.stdout }}"
+
+    - name: print host_vbox_version
+      ansible.builtin.debug:
+        msg: "{{ host_vbox_version }}"
+
+  when: virtualbox_version == "auto"
+
+- name: Mount VBoxGuestAdditions
+  ansible.posix.mount:
+    name: /media/cdrom
+    src: "{{ ISO_path }}"
+    fstype: iso9660
+    opts: noauto
+    state: mounted
+  register: mounted_ISO
+#  when: mount_path is defined and not mount_path.stdout
+
+- name: Check if VBoxGuest additions ISO is mounted
+  ansible.builtin.shell: mount -l 2>/dev/null|awk 'tolower($0) ~ /vbox.*additions/{print $3}'
+  register: mount_path
+
+- name: print mount_path
+  ansible.builtin.debug:
+    msg: "{{ mount_path }}"
+
+
+
+
+    - name: Save the current list of packages for Debians
+      block:
+        - name: Query current list
+          shell: dpkg-query -l > /tmp/before.txt
+          when: virtualbox_keep is undefined or not virtualbox_keep
+
+        - name: Install kernel headers for Debian
+          apt:
+            name: linux-headers-{{ ansible_kernel }}
+            update_cache: yes
+            cache_valid_time: 86400
+            install-recommends: no
+            state: present
+
+      when: ansible_os_family == "Debian"
+
+
+    - name: Install necessary packages for compiling
+      package:
+        name: ["bzip2", "dkms", "gcc", "make"]
+        state: present
+
+    - name: Uninstall previous VBoxGuestAdditions
+      shell: echo "yes" | /media/cdrom/VBoxLinuxAdditions.run uninstall
+      when: vbox_guest_version.stdout is defined
+      ignore_errors: yes
+
+    - name: Build and install x11 VBoxGuestAdditions from file
+      shell: /media/cdrom/VBoxLinuxAdditions.run
+      when: virtualbox_x11 is defined and virtualbox_x11
+      ignore_errors: yes
+
+    - name: Build and install VBoxGuestAdditions from file for Debians
+      shell: /media/cdrom/VBoxLinuxAdditions.run --nox11
+      when: ( virtualbox_x11 is undefined or not virtualbox_x11 ) and ansible_os_family == "Debian"
+      ignore_errors: yes
+
+    - name: Build and install VBoxGuestAdditions from file for CentOSes
+      shell: /media/cdrom/VBoxLinuxAdditions.run --nox11
+      when: ( virtualbox_x11 is undefined or not virtualbox_x11 ) and ansible_os_family == "RedHat"
+      ignore_errors: yes
+
+    - name: Unmount VBoxGuestAdditions
+      mount:
+        name: "{{ mount_path.stdout }}"
+        src: "{{ ISO_path }}"
+        fstype: iso9660
+        state: unmounted
+      when: mounted_ISO is changed
+
+
+
+
+#- name: install  | VirtualBox guest additions pack
+#  ansible.builtin.command:  "/media/ubuntu/VBox_GAs_7.0.22/VBoxLinuxAdditions.run"
+#  become: true
+#  become_user: ubuntu
+
+
+#apt-get install virtualbox-guest-additions-iso
+
+#mount /dev/cdrom /media/cdrom
+#apt-get install virtualbox-guest-additions-iso
