@@ -60,55 +60,50 @@
 
 
 
-    - name: Save the current list of packages for Debians
-      block:
-        - name: Query current list
-          shell: dpkg-query -l > /tmp/before.txt
-          when: virtualbox_keep is undefined or not virtualbox_keep
+#- name: Save the current list of packages for Debians
+#  block:
+#    - name: Query current list
+#      shell: dpkg-query -l > /tmp/before.txt
+#      when: virtualbox_keep is undefined or not virtualbox_keep
 
-        - name: Install kernel headers for Debian
-          apt:
-            name: linux-headers-{{ ansible_kernel }}
-            update_cache: yes
-            cache_valid_time: 86400
-            install-recommends: no
-            state: present
+#    - name: Install kernel headers for Debian
+#      apt:
+#        name: linux-headers-{{ ansible_kernel }}
+#        update_cache: yes
+#        cache_valid_time: 86400
+#        install-recommends: no
+#        state: present
 
-      when: ansible_os_family == "Debian"
+#  when: ansible_os_family == "Debian"
 
 
-    - name: Install necessary packages for compiling
-      package:
-        name: ["bzip2", "dkms", "gcc", "make"]
-        state: present
+- name: Install necessary packages for compiling
+  package:
+    name: ["bzip2", "dkms", "gcc", "make"]
+    state: present
 
-    - name: Uninstall previous VBoxGuestAdditions
-      shell: echo "yes" | /media/cdrom/VBoxLinuxAdditions.run uninstall
-      when: vbox_guest_version.stdout is defined
-      ignore_errors: yes
+- name: Uninstall previous VBoxGuestAdditions
+  ansible.builtin.shell: echo "yes" | /media/cdrom/VBoxLinuxAdditions.run uninstall
+#  when: vbox_guest_version.stdout is defined
+  ignore_errors: yes
 
-    - name: Build and install x11 VBoxGuestAdditions from file
-      shell: /media/cdrom/VBoxLinuxAdditions.run
-      when: virtualbox_x11 is defined and virtualbox_x11
-      ignore_errors: yes
+- name: Build and install x11 VBoxGuestAdditions from file
+  ansible.builtin.shell: /media/cdrom/VBoxLinuxAdditions.run
+#  when: virtualbox_x11 is defined and virtualbox_x11
+  ignore_errors: yes
 
-    - name: Build and install VBoxGuestAdditions from file for Debians
-      shell: /media/cdrom/VBoxLinuxAdditions.run --nox11
-      when: ( virtualbox_x11 is undefined or not virtualbox_x11 ) and ansible_os_family == "Debian"
-      ignore_errors: yes
+#- name: Build and install VBoxGuestAdditions from file for Debians
+#  shell: /media/cdrom/VBoxLinuxAdditions.run --nox11
+#  when: ( virtualbox_x11 is undefined or not virtualbox_x11 ) and ansible_os_family == "Debian"
+#  ignore_errors: yes
 
-    - name: Build and install VBoxGuestAdditions from file for CentOSes
-      shell: /media/cdrom/VBoxLinuxAdditions.run --nox11
-      when: ( virtualbox_x11 is undefined or not virtualbox_x11 ) and ansible_os_family == "RedHat"
-      ignore_errors: yes
-
-    - name: Unmount VBoxGuestAdditions
-      mount:
-        name: "{{ mount_path.stdout }}"
-        src: "{{ ISO_path }}"
-        fstype: iso9660
-        state: unmounted
-      when: mounted_ISO is changed
+- name: Unmount VBoxGuestAdditions
+  ansible.posix.mount:
+    name: "{{ mount_path.stdout }}"
+    src: "{{ ISO_path }}"
+    fstype: iso9660
+    state: unmounted
+  when: mounted_ISO is changed
 
 
 
