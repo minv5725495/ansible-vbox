@@ -11,6 +11,17 @@
 # virtualbox_version: auto
 
 # tasks file for virtualbox-guest
+
+- name: print regex_search
+  ansible.builtin.debug:
+    msg: "{{ inventory_hostname | regex_search('[0-9]{1,4}') }}"
+
+- name: Set a hostname specifying strategy
+  ansible.builtin.hostname:
+    name: "vbox-{{ inventory_hostname }}"
+    use: "debian"
+  ignore_errors: yes
+
 - name: Remove OS installation of virtualbox guest additions
   package:
     name: "{{ virtualbox_os_packages }}"
