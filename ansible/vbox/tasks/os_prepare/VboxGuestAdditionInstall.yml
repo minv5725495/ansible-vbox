@@ -50,6 +50,24 @@
 
   when: virtualbox_version == "auto"
 
+
+#- name: attach  ISO emptydrive  you can run this command only on stopped vm
+#  ansible.builtin.shell: "vboxmanage storageattach {{ vbox_vm_uuid }} --storagectl \"SATA\" --port 1 --type dvddrive --medium emptydrive"
+#  delegate_to: localhost
+#  become: no
+#  ignore_errors: yes
+
+- name: attach  ISO additions | cdrom --storagectl IDE --port 1 --device 0 --type dvddrive  --medium emptydrive  must be attached
+  #ansible.builtin.shell: "vboxmanage storageattach bc55452d-476d-4cb6-bbfd-6482f79dd587 --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions"
+  ansible.builtin.shell: "vboxmanage storageattach {{ vbox_vm_uuid }} --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions"
+  delegate_to: localhost
+  become: no
+  ignore_errors: yes
+
+- name: Check if VBoxGuest additions ISO is mounted
+  ansible.builtin.shell: mount -l 2>/dev/null|awk 'tolower($0) ~ /vbox.*additions/{print $3}'
+  register: mount_path
+
 - name: Mount VBoxGuestAdditions
   ansible.posix.mount:
     name: /media/cdrom
@@ -64,12 +82,10 @@
   ansible.builtin.shell: mount -l 2>/dev/null|awk 'tolower($0) ~ /vbox.*additions/{print $3}'
   register: mount_path
 
+
 - name: print mount_path
   ansible.builtin.debug:
     msg: "{{ mount_path }}"
-
-
-
 
 #- name: Save the current list of packages for Debians
 #  block:
@@ -116,16 +132,32 @@
     state: unmounted
   when: mounted_ISO is changed
 
+- name: Set clipboard mode
+  ansible.builtin.shell: "vboxmanage controlvm  {{ vbox_vm_uuid }}  clipboard mode bidirectional"
+  delegate_to: localhost
+  become: no
+  ignore_errors: yes
 
+- name: Shutdown VM | press acpipowerbutton
+  ansible.builtin.shell: "vboxmanage controlvm  {{ vbox_vm_uuid }}  acpipowerbutton"
+  delegate_to: localhost
+  become: no
+  ignore_errors: yes
 
+- name: Add Shared folder
+  ansible.builtin.shell: "vboxmanage sharedfolder add {{ vbox_vm_uuid }} --name VBoxShared --hostpath /home/m-ivanov/VBoxShared --automount --transient"
+  delegate_to: localhost
+  become: no
+  ignore_errors: yes
 
-#- name: install  | VirtualBox guest additions pack
-#  ansible.builtin.command:  "/media/ubuntu/VBox_GAs_7.0.22/VBoxLinuxAdditions.run"
-#  become: true
-#  become_user: ubuntu
+- name: Add Shared folder
+  ansible.builtin.shell: "vboxmanage sharedfolder add {{ vbox_vm_uuid }} --name VBxShCfg --hostpath /home/m-ivanov/VBoxShared/{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }} --automount --transient"
+  delegate_to: localhost
+  become: no
+  ignore_errors: yes
 
-
-#apt-get install virtualbox-guest-additions-iso
-
-#mount /dev/cdrom /media/cdrom
-#apt-get install virtualbox-guest-additions-iso
+#- name: Example how to read from usr_prof
+#  ansible.builtin.debug:
+#     msg:
+#        - "{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }}"
+#        - "{{ 'acc' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"

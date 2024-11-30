@@ -5,11 +5,11 @@
   tasks:
     - name: facts
       ansible.builtin.include_tasks: tasks/os_prepare/VboxGetFact.yml
-    - name: install
+    - name: install guest additions
       ansible.builtin.include_tasks: tasks/os_prepare/VboxGuestAdditionInstall.yml
-    - name: system
-      ansible.builtin.include_tasks: tasks/os_prepare/system.yml
-    - name: users
-      ansible.builtin.include_tasks: tasks/os_prepare/users.yml
+#    - name: system
+#      ansible.builtin.include_tasks: tasks/os_prepare/system.yml
+#    - name: users
+#      ansible.builtin.include_tasks: tasks/os_prepare/users.yml
 #    - name: common_pckgs
 #      ansible.builtin.include_tasks: tasks/os_prepare/common_pckgs.yml

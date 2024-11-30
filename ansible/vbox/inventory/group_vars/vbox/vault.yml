@@ -6,3 +6,65 @@ vault_sysusers:
       sshpubkeys:
         - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIARqEqpRAYjRelJeNBoQ/EMXU9gT+HQBKQ0e3lV+0kXU pic16f874@github.com'
         - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIjyPGTttiCs4S4sqzv96W+NyzUPtO8+7/HiDOXoZdwD mykola.ivanov-ext@ledger.fr'
+
+#- name: Example how to read from usr_prof
+#  ansible.builtin.debug:
+#     msg:
+#        - "{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }}"
+#        - "{{ 'acc' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"
+vault_usr_prof:
+        XU2404_11:
+           prof_name: acc1-mykoinv6707663
+           gmail:
+             acc: mykoinv@gmail.com
+             pwd: GM-DzKb533Pav4uVZtk
+             otp: 6K7DIVKYC7L2HI7BDNUQN5T6UIZCEGFC
+
+        XU2404_12:
+           prof_name: acc2-minv5725495
+           gmail:
+             acc: minv5725495@gmail.com
+             pwd: eQL9Pf67YQe4DPL
+             otp: A44SE2O35L4O2KGXKUAZ6F3HG3AQ5AX3
+
+        XU2404_13:
+           prof_name: acc3-ni3.2839574
+           gmail:
+             acc:
+             pwd:
+             otp:
+
+        XU2404_14:
+           prof_name: acc4-my4.2492871
+           gmail:
+             acc:
+             pwd:
+             otp:
+
+        XU2404_15:
+           prof_name: acc5-nino4136017
+           gmail:
+             acc:
+             pwd:
+             otp:
+
+        XU2404_16:
+           prof_name: acc6-toly4136018
+           gmail:
+             acc:
+             pwd:
+             otp:
+
+        XU2404_17:
+           prof_name: acc7-vikt4136042
+           gmail:
+             acc:
+             pwd:
+             otp:
+
+        XU2404_18:
+           prof_name: acc8-vera4136029
+           gmail:
+             acc:
+             pwd:
+             otp:

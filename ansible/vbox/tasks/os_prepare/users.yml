@@ -7,7 +7,10 @@
   ansible.builtin.user:
     name: "{{ item.username }}"
     #group: "{{ item }}"
-    groups: sysusers
+    groups:
+       - sysusers
+       - vboxsf
+#       - sambashare
     shell: /bin/bash
     state: present
     password: "{{ item.password }}"
@@ -18,7 +21,7 @@
     path: /etc/sudoers
     insertafter: "root    ALL=(ALL)       ALL"
     block: |
-      # Gives sudo access to the backend group
+      # Gives sudo access to the sysusers group
       %sysusers        ALL=(ALL)       NOPASSWD: ALL
 
 #- name: L O O P   D E B U G   |  nested loop on subelements
@@ -34,6 +37,7 @@
     state: present
     key: "{{ item.1 }}"
   loop: "{{ sysusers | subelements('sshpubkeys') }}"
+
 
 
 #- name: users | create .themes dir
