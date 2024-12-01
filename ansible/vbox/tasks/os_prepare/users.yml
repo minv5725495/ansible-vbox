@@ -38,80 +38,59 @@
     key: "{{ item.1 }}"
   loop: "{{ sysusers | subelements('sshpubkeys') }}"
 
-
-- name: create subdirs in VBoxShared dir .mozilla
+- name: create Desktop dir
   ansible.builtin.file:
-    path: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
+    path: "/home/{{ item.username }}/Desktop/"
+    state: directory
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
     mode: '0755'
-    state: directory
   loop: "{{ sysusers }}"
-- name: create symlinks to VBoxShared dir
-  ansible.builtin.file:
-    dest:  "/home/{{ item.username }}/.mozilla"
-    src: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
-    state: link
-  loop: "{{ sysusers }}"
-
-- name: create subdirs in VBoxShared dir .config
-  ansible.builtin.file:
-    path: "/media/sf_VBxShCfg/{{ item.username }}/.config/google-chrome"
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
+- name:  users | Copy a desktopfiles files
+  ansible.builtin.copy:
+    src: "files/desktop-shortcuts/{{ item.1 }}"
+    dest: "/home/{{ item.0.username }}/Desktop/{{ item.1 }}"
+    owner: "{{ item.0.username }}"
+    group: "{{ item.0.username }}"
     mode: '0755'
-    state: directory
-  loop: "{{ sysusers }}"
-- name: create symlinks to VBoxShared dir
-  ansible.builtin.file:
-    dest:  "/home/{{ item.username }}/.config/google-chrome"
-    src: "/media/sf_VBxShCfg/{{ item.username }}/.config/google-chrome"
-    state: link
-  loop: "{{ sysusers }}"
+  loop: "{{ sysusers | subelements('desktopfiles') }}"
 
-- name: create subdirs in VBoxShared dir .config
-  ansible.builtin.file:
-    path: "/media/sf_VBxShCfg/{{ item.username }}/.config/discord"
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-    mode: '0777'
-    state: directory
+- name: users | set theme
+  ansible.builtin.lineinfile:
+    path: /home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+    regexp: '.*<property name="theme" type="string" value=".*"/>'
+    line: '<property name="theme" type="string" value="UA2"/>'
   loop: "{{ sysusers }}"
-- name: create symlinks to VBoxShared dir
-  ansible.builtin.file:
-    dest: "/home/{{ item.username }}/.config/discord"
-    src:  "/media/sf_VBxShCfg/{{ item.username }}/.config/discord"
-    state: link
-  loop: "{{ sysusers }}"
+  ignore_errors: yes
 
-- name: Install a discord.deb package from the internet
-  ansible.builtin.apt:
-    deb: https://dl.discordapp.net/apps/linux/0.0.76/discord-0.0.76.deb
-
-#- name: users | create .themes dir
+#- name: create subdirs in VBoxShared dir .mozilla
 #  ansible.builtin.file:
+#    path: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
 #    owner: "{{ item.username }}"
 #    group: "{{ item.username }}"
+#    mode: '0755'
 #    state: directory
-#    mode: '0755'
-#    path:  "/home/{{ item.username }}/.themes"
 #  loop: "{{ sysusers }}"
-
-#- name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2
-#  ansible.builtin.unarchive:
-#    src: "files/UA2-xfce-theme.tar.gz"
-#    dest: "/home/{{ item.username }}/.themes"
-#    #remote_src: yes
-#    owner: "{{ item.username }}"
-#    group: "{{ item.username }}"
-#    mode: '0755'
+#- name: create symlinks to VBoxShared dir
+#  ansible.builtin.file:
+#    dest:  "/home/{{ item.username }}/.mozilla"
+#    src: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
+#    state: link
 #  loop: "{{ sysusers }}"
 
 
-
-#- name: users | set theme
-#  ansible.builtin.lineinfile:
-#    path: /home/{{ item }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
-#    regexp: '.*<property name="theme" type="string" value=".*"/>'
-#    line: '<property name="theme" type="string" value="UA2"/>'
+#- name: Install a FIREFOX package from the internet
+#  ansible.builtin.get_url:
+#    url: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+#    dest: /home/{{ item.username }}/firefox.tar.bz2
+#    decompress: false
+##    owner: "{{ item.username }}"
+##    group: "{{ item.username }}"
+##    mode: '0755'
 #  loop: "{{ sysusers }}"
+
+- name: Download and Unarchive firefox
+  ansible.builtin.unarchive:
+    src: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+    dest: /usr/lib
+    remote_src: yes

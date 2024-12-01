@@ -16,6 +16,9 @@
   ansible.builtin.unarchive:
     src: "files/UA2-xfce-theme.tar.gz"
     dest: "/usr/share/themes/"
+    owner: "root"
+    group: "root"
+    mode: '0755'
 
 - name: mc-ncdu | install required packages
   ansible.builtin.package:
@@ -24,3 +27,17 @@
   loop:
       - mc
       - ncdu
+      - bzip2
+      - tar
+      - htop
+      - git
+      - curl
+
+
+- name: Install a DISCORD package from the internet
+  ansible.builtin.apt:
+    deb: https://dl.discordapp.net/apps/linux/0.0.76/discord-0.0.76.deb
+
+- name: Install a CHROME package from the internet
+  ansible.builtin.apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
