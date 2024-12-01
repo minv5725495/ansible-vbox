@@ -82,11 +82,6 @@
   ansible.builtin.shell: mount -l 2>/dev/null|awk 'tolower($0) ~ /vbox.*additions/{print $3}'
   register: mount_path
 
-
-- name: print mount_path
-  ansible.builtin.debug:
-    msg: "{{ mount_path }}"
-
 #- name: Save the current list of packages for Debians
 #  block:
 #    - name: Query current list
@@ -138,23 +133,53 @@
   become: no
   ignore_errors: yes
 
-- name: Shutdown VM | press acpipowerbutton
-  ansible.builtin.shell: "vboxmanage controlvm  {{ vbox_vm_uuid }}  acpipowerbutton"
+- name: Unconditionally shut down the machine with all defaults
+  community.general.shutdown:
+
+#- name: Shutdown VM | press acpipowerbutton
+#  ansible.builtin.shell: "vboxmanage controlvm  {{ vbox_vm_uuid }}  acpipowerbutton"
+#  delegate_to: localhost
+#  become: no
+#  ignore_errors: yes
+
+- name: Pause for 10 seconds
+  ansible.builtin.pause:
+    seconds: 10
+
+- name: Set Fact ---  ext_config_dir
+  ansible.builtin.set_fact:
+    ext_common_dir: "{{ host_usr_home }}/VBoxShared"
+    ext_config_dir: "{{ host_usr_home }}/VBoxShared/{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }}"
+
+- name: create VBoxShared dir
+  ansible.builtin.file:
+    path: "{{ ext_config_dir }}"
+    state: directory
+#    owner: "{{ item.username }}"
+#    group: "{{ item.username }}"
+#    mode: '0755'
+  delegate_to: localhost
+  become: no
+
+- name: Add Shared folder (common)
+  ansible.builtin.shell: >
+        vboxmanage sharedfolder add {{ vbox_vm_uuid }}
+        --name VBoxShared --hostpath {{ ext_common_dir }}
   delegate_to: localhost
   become: no
   ignore_errors: yes
 
-- name: Add Shared folder
-  ansible.builtin.shell: "vboxmanage sharedfolder add {{ vbox_vm_uuid }} --name VBoxShared --hostpath /home/m-ivanov/VBoxShared --automount --transient"
+- name: Add Shared folder (special)
+  ansible.builtin.shell: >
+        vboxmanage sharedfolder add {{ vbox_vm_uuid }}
+        --name VBxShCfg --hostpath {{ ext_config_dir }}
   delegate_to: localhost
   become: no
   ignore_errors: yes
 
-- name: Add Shared folder
-  ansible.builtin.shell: "vboxmanage sharedfolder add {{ vbox_vm_uuid }} --name VBxShCfg --hostpath /home/m-ivanov/VBoxShared/{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }} --automount --transient"
-  delegate_to: localhost
-  become: no
-  ignore_errors: yes
+- name: Pause for 60 seconds
+  ansible.builtin.pause:
+    seconds: 60
 
 #- name: Example how to read from usr_prof
 #  ansible.builtin.debug:

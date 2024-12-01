@@ -1,4 +1,7 @@
+host_usr_home: "{{ vault_host_usr_home }}"
+
 ubuntu_usr_pwd: "{{ vault_ubuntu_usr_pwd }}"
+
 
 sysusers: "{{ vault_sysusers }}"
 usr_prof: "{{ vault_usr_prof }}"

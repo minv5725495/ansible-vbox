@@ -39,14 +39,62 @@
   loop: "{{ sysusers | subelements('sshpubkeys') }}"
 
 
+- name: create subdirs in VBoxShared dir .mozilla
+  ansible.builtin.file:
+    path: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+    state: directory
+  loop: "{{ sysusers }}"
+- name: create symlinks to VBoxShared dir
+  ansible.builtin.file:
+    dest:  "/home/{{ item.username }}/.mozilla"
+    src: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
+    state: link
+  loop: "{{ sysusers }}"
+
+- name: create subdirs in VBoxShared dir .config
+  ansible.builtin.file:
+    path: "/media/sf_VBxShCfg/{{ item.username }}/.config/google-chrome"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+    state: directory
+  loop: "{{ sysusers }}"
+- name: create symlinks to VBoxShared dir
+  ansible.builtin.file:
+    dest:  "/home/{{ item.username }}/.config/google-chrome"
+    src: "/media/sf_VBxShCfg/{{ item.username }}/.config/google-chrome"
+    state: link
+  loop: "{{ sysusers }}"
+
+- name: create subdirs in VBoxShared dir .config
+  ansible.builtin.file:
+    path: "/media/sf_VBxShCfg/{{ item.username }}/.config/discord"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0777'
+    state: directory
+  loop: "{{ sysusers }}"
+- name: create symlinks to VBoxShared dir
+  ansible.builtin.file:
+    dest: "/home/{{ item.username }}/.config/discord"
+    src:  "/media/sf_VBxShCfg/{{ item.username }}/.config/discord"
+    state: link
+  loop: "{{ sysusers }}"
+
+- name: Install a discord.deb package from the internet
+  ansible.builtin.apt:
+    deb: https://dl.discordapp.net/apps/linux/0.0.76/discord-0.0.76.deb
 
 #- name: users | create .themes dir
 #  ansible.builtin.file:
-#    path:  "/home/{{ item.username }}/.themes"
 #    owner: "{{ item.username }}"
 #    group: "{{ item.username }}"
 #    state: directory
 #    mode: '0755'
+#    path:  "/home/{{ item.username }}/.themes"
 #  loop: "{{ sysusers }}"
 
 #- name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2

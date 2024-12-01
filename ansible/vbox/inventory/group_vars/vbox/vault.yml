@@ -1,3 +1,4 @@
+vault_host_usr_home: '/home/m-ivanov'
 vault_ubuntu_usr_pwd: ubuntu235
 
 vault_sysusers:
@@ -12,57 +13,59 @@ vault_sysusers:
 #     msg:
 #        - "{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }}"
 #        - "{{ 'acc' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"
+# https://www.middlewareinventory.com/blog/ansible-map/
+
 vault_usr_prof:
-        XU2404_11:
+        XU2404-11:
            prof_name: acc1-mykoinv6707663
            gmail:
              acc: mykoinv@gmail.com
              pwd: GM-DzKb533Pav4uVZtk
              otp: 6K7DIVKYC7L2HI7BDNUQN5T6UIZCEGFC
 
-        XU2404_12:
+        XU2404-12:
            prof_name: acc2-minv5725495
            gmail:
              acc: minv5725495@gmail.com
              pwd: eQL9Pf67YQe4DPL
              otp: A44SE2O35L4O2KGXKUAZ6F3HG3AQ5AX3
 
-        XU2404_13:
+        XU2404-13:
            prof_name: acc3-ni3.2839574
            gmail:
              acc:
              pwd:
              otp:
 
-        XU2404_14:
+        XU2404-14:
            prof_name: acc4-my4.2492871
            gmail:
              acc:
              pwd:
              otp:
 
-        XU2404_15:
+        XU2404-15:
            prof_name: acc5-nino4136017
            gmail:
              acc:
              pwd:
              otp:
 
-        XU2404_16:
+        XU2404-16:
            prof_name: acc6-toly4136018
            gmail:
              acc:
              pwd:
              otp:
 
-        XU2404_17:
+        XU2404-17:
            prof_name: acc7-vikt4136042
            gmail:
              acc:
              pwd:
              otp:
 
-        XU2404_18:
+        XU2404-18:
            prof_name: acc8-vera4136029
            gmail:
              acc:

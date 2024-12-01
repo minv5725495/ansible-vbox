@@ -12,8 +12,15 @@
 #    line: 'PasswordAuthentication no'
 #    state: present
 
-
 - name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2
   ansible.builtin.unarchive:
     src: "files/UA2-xfce-theme.tar.gz"
     dest: "/usr/share/themes/"
+
+- name: mc-ncdu | install required packages
+  ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+  loop:
+      - mc
+      - ncdu
