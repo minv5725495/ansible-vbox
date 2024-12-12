@@ -88,9 +88,3 @@
 ##    group: "{{ item.username }}"
 ##    mode: '0755'
 #  loop: "{{ sysusers }}"
-
-- name: Download and Unarchive firefox
-  ansible.builtin.unarchive:
-    src: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
-    dest: /usr/lib
-    remote_src: yes

@@ -41,3 +41,9 @@
 - name: Install a CHROME package from the internet
   ansible.builtin.apt:
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+- name: Download and Unarchive firefox
+  ansible.builtin.unarchive:
+    src: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
+    dest: /usr/lib
+    remote_src: yes
