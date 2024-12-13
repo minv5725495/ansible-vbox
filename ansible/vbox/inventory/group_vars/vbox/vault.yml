@@ -27,6 +27,8 @@ vault_usr_prof:
              acc: mykoinv@gmail.com
              pwd: GM-DzKb533Pav4uVZtk
              otp: 6K7DIVKYC7L2HI7BDNUQN5T6UIZCEGFC
+           bkpcmd: 'cd ~;tar -czf /media/sf_VBoxShared/acc1-mykoinv6707663/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/* '
+           rstcmd: 'cd ~; tar -xzf /media/sf_VBoxShared/acc1-mykoinv6707663/webbkp-2024-12-12.tgz '
 
         XU2404-12:
            prof_name: acc2-minv5725495
@@ -34,6 +36,16 @@ vault_usr_prof:
              acc: minv5725495@gmail.com
              pwd: eQL9Pf67YQe4DPL
              otp: A44SE2O35L4O2KGXKUAZ6F3HG3AQ5AX3
+           ssh:
+             pubkey: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/AACxI5/ng0TTmXR6HG6RJll22tycAkWd6EVM1Jsvu minv5725495'
+             sshprvkey: |
+                 -----BEGIN OPENSSH PRIVATE KEY-----
+                 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+                 QyNTUxOQAAACCPwAAsSOf54NE05l0ehxukSZZdtrcnAJFnehFTNSbL7gAAAJhVDHbUVQx2
+                 1AAAAAtzc2gtZWQyNTUxOQAAACCPwAAsSOf54NE05l0ehxukSZZdtrcnAJFnehFTNSbL7g
+                 AAAEDnt9Em3Aj96DFunwg9YmKcnBhJ0RRH6BAin2zZEAYteY/AACxI5/ng0TTmXR6HG6RJ
+                 ll22tycAkWd6EVM1JsvuAAAAFG1pbnY1NzI1NDk1QExhdC01NTIxAQ==
+                 -----END OPENSSH PRIVATE KEY-----
 
         XU2404-13:
            prof_name: acc3-ni3.2839574

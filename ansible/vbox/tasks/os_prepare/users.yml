@@ -55,6 +55,9 @@
     mode: '0755'
   loop: "{{ sysusers | subelements('desktopfiles') }}"
 
+
+#/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+
 - name: users | set theme
   ansible.builtin.lineinfile:
     path: /home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
@@ -62,6 +65,10 @@
     line: '<property name="theme" type="string" value="UA2"/>'
   loop: "{{ sysusers }}"
   ignore_errors: yes
+
+#  cd ~;tar -czf /media/sf_VBoxShared/{{prof_name}}/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/*
+#mkdir -p /media/sf_VBoxShared/${HOSTNAME};cd ~;tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/*
+
 
 #- name: create subdirs in VBoxShared dir .mozilla
 #  ansible.builtin.file:

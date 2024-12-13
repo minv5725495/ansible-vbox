@@ -36,7 +36,9 @@
 
 - name: Install a DISCORD package from the internet
   ansible.builtin.apt:
-    deb: https://dl.discordapp.net/apps/linux/0.0.76/discord-0.0.76.deb
+    deb: https://discordapp.com/api/download?platform=linux&format=deb
+    #    deb: https://dl.discordapp.net/apps/linux/0.0.77/discord-0.0.77.deb
+    #wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
 
 - name: Install a CHROME package from the internet
   ansible.builtin.apt:
