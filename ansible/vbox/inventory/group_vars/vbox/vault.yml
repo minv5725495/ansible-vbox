@@ -20,6 +20,21 @@ vault_sysusers:
 #        - "{{ 'acc' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"
 # https://www.middlewareinventory.com/blog/ansible-map/
 
+vault_bkpcmd: >
+    mkdir -p /media/sf_VBoxShared/${HOSTNAME};
+    cd ~;
+    tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz
+    .electrum/*
+    .mozilla/firefox/*
+    snap/firefox/common/.mozilla/firefox/*
+    .config/google-chrome/*
+    .config/discord/*
+vault_rstcmd: >
+    cd ~;
+    tar -xzf /media/sf_VBoxShared/${HOSTNAME}/webbkp-2024-12-12.tgz
+
+
+
 vault_usr_prof:
         XU2404-11:
            prof_name: acc1-mykoinv6707663
@@ -27,8 +42,9 @@ vault_usr_prof:
              acc: mykoinv@gmail.com
              pwd: GM-DzKb533Pav4uVZtk
              otp: 6K7DIVKYC7L2HI7BDNUQN5T6UIZCEGFC
-           bkpcmd: 'cd ~;tar -czf /media/sf_VBoxShared/acc1-mykoinv6707663/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/* '
-           rstcmd: 'cd ~; tar -xzf /media/sf_VBoxShared/acc1-mykoinv6707663/webbkp-2024-12-12.tgz '
+
+
+'
 
         XU2404-12:
            prof_name: acc2-minv5725495
@@ -50,16 +66,16 @@ vault_usr_prof:
         XU2404-13:
            prof_name: acc3-ni3.2839574
            gmail:
-             acc:
-             pwd:
-             otp:
+             acc: ni3.2839574@gmail.com
+             pwd: GM-2839574-fji02maZ
+             otp: QYJQ7MB6FHSALQU5THWVYMZ73MU3WW5B
 
         XU2404-14:
            prof_name: acc4-my4.2492871
            gmail:
-             acc:
-             pwd:
-             otp:
+             acc: my4.2492871@gmail.com
+             pwd: GM-umc2492871-fji02maZ
+             otp: FWL2JV6QBS7UAF33NRV55EUNF77TJLDP
 
         XU2404-15:
            prof_name: acc5-nino4136017
