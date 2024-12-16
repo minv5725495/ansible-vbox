@@ -55,9 +55,28 @@
     mode: '0755'
   loop: "{{ sysusers | subelements('desktopfiles') }}"
 
+- name: users | add TOTP
+  ansible.builtin.lineinfile:
+    path: "/home/{{ item.username }}/Desktop/TOTP.sh"
+    create: true
+    regexp: '^$'
+    line: "oathtool -b --totp {{ 'otp' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+  loop: "{{ sysusers }}"
 
 #/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
-
+- name: users | set theme | copy template
+  ansible.builtin.copy:
+    src: "/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
+    dest: "/home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
+    force: false
+    remote_src : true
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+  loop: "{{ sysusers }}"
 - name: users | set theme
   ansible.builtin.lineinfile:
     path: /home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml

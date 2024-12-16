@@ -32,7 +32,8 @@
       - htop
       - git
       - curl
-
+      - oathtool
+      - mousepad
 
 - name: Install a DISCORD package from the internet
   ansible.builtin.apt:

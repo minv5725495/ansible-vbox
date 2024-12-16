@@ -12,6 +12,8 @@ vault_sysusers:
         - 'Firefox.desktop'
         - 'Google-Chrome.desktop'
         - 'terminal.desktop'
+        - 'backup.sh'
+        - 'restore.sh'
 
 #- name: Example how to read from usr_prof
 #  ansible.builtin.debug:
@@ -19,19 +21,6 @@ vault_sysusers:
 #        - "{{ inventory_hostname | extract( usr_prof, morekeys='prof_name' ) }}"
 #        - "{{ 'acc' | extract ( inventory_hostname | extract( usr_prof, morekeys='gmail' ) ) }}"
 # https://www.middlewareinventory.com/blog/ansible-map/
-
-vault_bkpcmd: >
-    mkdir -p /media/sf_VBoxShared/${HOSTNAME};
-    cd ~;
-    tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz
-    .electrum/*
-    .mozilla/firefox/*
-    snap/firefox/common/.mozilla/firefox/*
-    .config/google-chrome/*
-    .config/discord/*
-vault_rstcmd: >
-    cd ~;
-    tar -xzf /media/sf_VBoxShared/${HOSTNAME}/webbkp-2024-12-12.tgz
 
 
 
@@ -42,9 +31,6 @@ vault_usr_prof:
              acc: mykoinv@gmail.com
              pwd: GM-DzKb533Pav4uVZtk
              otp: 6K7DIVKYC7L2HI7BDNUQN5T6UIZCEGFC
-
-
-'
 
         XU2404-12:
            prof_name: acc2-minv5725495
@@ -80,27 +66,27 @@ vault_usr_prof:
         XU2404-15:
            prof_name: acc5-nino4136017
            gmail:
-             acc:
-             pwd:
-             otp:
+             acc: nino4136017@gmail.com
+             pwd: GM-IRRiw5OMAjEm9t9s7TsF
+             otp: PCB4TJEXFK4G45IRQ5N6QPVIU4YBCTIS
 
         XU2404-16:
            prof_name: acc6-toly4136018
            gmail:
-             acc:
-             pwd:
-             otp:
+             acc: toly4136018@gmail.com
+             pwd: GM-HWwxmPSYY3CqIbJsdPe3
+             otp: KPFENUMB5JVRVHLW5ZRSPJJQRMVR4CTO
 
         XU2404-17:
            prof_name: acc7-vikt4136042
            gmail:
-             acc:
-             pwd:
+             acc: vikt4136042@gmail.com
+             pwd: GM-JvdSgtktx3eXQkAE
              otp:
 
         XU2404-18:
            prof_name: acc8-vera4136029
            gmail:
-             acc:
-             pwd:
-             otp:
+             acc: vera4136029@gmail.com
+             pwd: GM-4LqskklT6BLa1MKQro
+             otp: PSY7YIZF7SGQNBZA3RL373PCCX64UAIL
