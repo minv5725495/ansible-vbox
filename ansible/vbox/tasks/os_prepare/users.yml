@@ -1,3 +1,9 @@
+- name: Set a hostname specifying strategy
+  ansible.builtin.hostname:
+    name: "vbox-{{ inventory_hostname }}"
+    use: "debian"
+  ignore_errors: yes
+
 - name: users | create system group
   ansible.builtin.group:
     name: sysusers
@@ -66,6 +72,15 @@
     mode: '0755'
   loop: "{{ sysusers }}"
 
+
+- name: users | create theme dir
+  ansible.builtin.file:
+    path: "/home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml"
+    state: directory
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+  loop: "{{ sysusers }}"
 #/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 - name: users | set theme | copy template
   ansible.builtin.copy:
@@ -85,32 +100,19 @@
   loop: "{{ sysusers }}"
   ignore_errors: yes
 
-#  cd ~;tar -czf /media/sf_VBoxShared/{{prof_name}}/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/*
-#mkdir -p /media/sf_VBoxShared/${HOSTNAME};cd ~;tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz .mozilla/firefox/* .config/google-chrome/* .config/discord/*
-
-
-#- name: create subdirs in VBoxShared dir .mozilla
+#- name: create Panel dir
 #  ansible.builtin.file:
-#    path: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
+#    path: "/home/{{ item.username }}/.config/xfce4/panel/launcher-11"
+#    state: directory
 #    owner: "{{ item.username }}"
 #    group: "{{ item.username }}"
 #    mode: '0755'
-#    state: directory
 #  loop: "{{ sysusers }}"
-#- name: create symlinks to VBoxShared dir
-#  ansible.builtin.file:
-#    dest:  "/home/{{ item.username }}/.mozilla"
-#    src: "/media/sf_VBxShCfg/{{ item.username }}/.mozilla"
-#    state: link
-#  loop: "{{ sysusers }}"
-
-
-#- name: Install a FIREFOX package from the internet
-#  ansible.builtin.get_url:
-#    url: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
-#    dest: /home/{{ item.username }}/firefox.tar.bz2
-#    decompress: false
-##    owner: "{{ item.username }}"
-##    group: "{{ item.username }}"
-##    mode: '0755'
-#  loop: "{{ sysusers }}"
+#- name:  users | Copy a desktopfiles files
+#  ansible.builtin.copy:
+#    src: "files/desktop-shortcuts/{{ item.1 }}"
+#    dest: "/home/{{ item.0.username }}/.config/xfce4/panel/launcher-11/{{ item.1 }}"
+#    owner: "{{ item.0.username }}"
+#    group: "{{ item.0.username }}"
+#    mode: '0755'
+#  loop: "{{ sysusers | subelements('desktopfiles') }}"

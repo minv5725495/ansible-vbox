@@ -1,2 +1,2 @@
 cd ~;
-tar -xzf /media/sf_VBoxShared/${HOSTNAME}/webbkp-2024-12-12.tgz
+tar -xzf  $(ls -r /media/sf_VBoxShared/${HOSTNAME}/webbkp*.tgz | head -n 1 )

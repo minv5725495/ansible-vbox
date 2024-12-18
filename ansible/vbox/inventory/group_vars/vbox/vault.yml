@@ -25,6 +25,8 @@ vault_sysusers:
 
 
 vault_usr_prof:
+        XU2404-00:
+
         XU2404-11:
            prof_name: acc1-mykoinv6707663
            gmail:
@@ -82,7 +84,7 @@ vault_usr_prof:
            gmail:
              acc: vikt4136042@gmail.com
              pwd: GM-JvdSgtktx3eXQkAE
-             otp:
+             otp: EDDJJ4XIP6JONFFV5RZZG25R2SX5WCLO
 
         XU2404-18:
            prof_name: acc8-vera4136029
@@ -90,3 +92,10 @@ vault_usr_prof:
              acc: vera4136029@gmail.com
              pwd: GM-4LqskklT6BLa1MKQro
              otp: PSY7YIZF7SGQNBZA3RL373PCCX64UAIL
+
+        XU2404-92:
+           prof_name: acc-clone2
+           gmail:
+             acc: ''
+             pwd: ''
+             otp: ''

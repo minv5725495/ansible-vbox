@@ -20,6 +20,12 @@
     group: "root"
     mode: '0755'
 
+- name: apt update
+  ansible.builtin.apt:
+     update_cache: true
+     upgrade: safe
+     #upgrade: full
+
 - name: mc-ncdu | install required packages
   ansible.builtin.package:
       name: "{{ item }}"
@@ -34,12 +40,12 @@
       - curl
       - oathtool
       - mousepad
+      - engrampa
 
 - name: Install a DISCORD package from the internet
   ansible.builtin.apt:
     deb: https://discordapp.com/api/download?platform=linux&format=deb
     #deb: https://dl.discordapp.net/apps/linux/0.0.77/discord-0.0.77.deb
-
 
 - name: Install a CHROME package from the internet
   ansible.builtin.apt:
