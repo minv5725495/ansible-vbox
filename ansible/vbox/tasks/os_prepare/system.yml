@@ -20,6 +20,14 @@
     group: "root"
     mode: '0755'
 
+- name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2
+  ansible.builtin.unarchive:
+    src: "files/wallpaper/{{ inventory_hostname }}.png"
+    dest: "/usr/share/xfce4/backdrops/xubuntu-wallpaper.png"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
 - name: apt update
   ansible.builtin.apt:
      update_cache: true
