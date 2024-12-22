@@ -1,3 +1,11 @@
+- name: users | add wallpaper
+  ansible.builtin.copy:
+    src: "files/wallpaper/{{ inventory_hostname }}.png"
+    dest: "/usr/share/xfce4/backdrops/xubuntu-noble.png"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
 - name: Set a hostname specifying strategy
   ansible.builtin.hostname:
     name: "vbox-{{ inventory_hostname }}"
@@ -82,6 +90,17 @@
   loop: "{{ sysusers }}"
 
 #/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+- name: users | set kbrd layouts
+  ansible.builtin.copy:
+    src: "files/xfce4/keyboard-layout.xml"
+    dest: "/home/{{ item.username }}/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml"
+    force: false
+    #remote_src : true
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+  loop: "{{ sysusers }}"
+
 - name: users | set theme | copy template
   ansible.builtin.copy:
     src: "/etc/xdg/xdg-xubuntu/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
@@ -100,6 +119,17 @@
   loop: "{{ sysusers }}"
   ignore_errors: yes
 
+#- name: Install bottle python package
+#  ansible.builtin.pip:
+#    name: https://download.electrum.org/4.5.8/Electrum-4.5.8.tar.gz
+#    name: https://download.electrum.org/4.3.4/Electrum-4.3.4.tar.gz  Tails
+- name: Download and Unarchive Electrum
+  ansible.builtin.unarchive:
+    src: https://download.electrum.org/4.5.8/Electrum-4.5.8.tar.gz
+    dest: "/home/{{ item.username }}"
+    remote_src: yes
+  loop: "{{ sysusers }}"
+
 #- name: create Panel dir
 #  ansible.builtin.file:
 #    path: "/home/{{ item.username }}/.config/xfce4/panel/launcher-11"
@@ -116,3 +146,8 @@
 #    group: "{{ item.0.username }}"
 #    mode: '0755'
 #  loop: "{{ sysusers | subelements('desktopfiles') }}"
+
+#- name: users | remove user ubuntu
+#  ansible.builtin.user:
+#    name: ubuntu
+#    state: absent

@@ -8,12 +8,14 @@ vault_sysusers:
         - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIARqEqpRAYjRelJeNBoQ/EMXU9gT+HQBKQ0e3lV+0kXU pic16f874@github.com'
         - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIjyPGTttiCs4S4sqzv96W+NyzUPtO8+7/HiDOXoZdwD mykola.ivanov-ext@ledger.fr'
       desktopfiles:
+        - 'Electrum.desktop'
         - 'Discord.desktop'
         - 'Firefox.desktop'
         - 'Google-Chrome.desktop'
         - 'terminal.desktop'
         - 'backup.sh'
         - 'restore.sh'
+        - 'electrum.sh'
 
 #- name: Example how to read from usr_prof
 #  ansible.builtin.debug:
@@ -95,6 +97,13 @@ vault_usr_prof:
 
         XU2404-92:
            prof_name: acc-clone2
+           gmail:
+             acc: ''
+             pwd: ''
+             otp: ''
+
+        XU2404-58:
+           prof_name: acc-5-8
            gmail:
              acc: ''
              pwd: ''

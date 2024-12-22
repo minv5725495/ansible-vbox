@@ -20,14 +20,13 @@
     group: "root"
     mode: '0755'
 
-- name: users | add UA2 theme - select it in Window manager -> Style -> Theme -> UA2
-  ansible.builtin.unarchive:
+- name: users | add wallpaper
+  ansible.builtin.copy:
     src: "files/wallpaper/{{ inventory_hostname }}.png"
-    dest: "/usr/share/xfce4/backdrops/xubuntu-wallpaper.png"
+    dest: "/usr/share/xfce4/backdrops/xubuntu-noble.png"
     owner: "root"
     group: "root"
     mode: '0644'
-
 - name: apt update
   ansible.builtin.apt:
      update_cache: true
@@ -49,6 +48,18 @@
       - oathtool
       - mousepad
       - engrampa
+      - xfce4-xkb-plugin
+
+- name: electrum | install dependencies
+  ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+  loop:
+      - python3-pyqt5
+      - libsecp256k1-dev
+      - python3-cryptography
+      - python3-setuptools
+      - python3-pip
 
 - name: Install a DISCORD package from the internet
   ansible.builtin.apt:
@@ -59,7 +70,7 @@
   ansible.builtin.apt:
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-- name: Download and Unarchive firefox
+- name: Download and Unarchive FireFox
   ansible.builtin.unarchive:
     src: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
     dest: /usr/lib
