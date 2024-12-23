@@ -8,3 +8,4 @@ snap/firefox/common/.mozilla/firefox/* \
 .config/google-chrome/* \
 .config/discord/* \
 .config/atomic/* \
+.config/Exodus/*
