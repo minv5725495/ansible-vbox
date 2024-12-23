@@ -7,3 +7,4 @@ tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz \
 snap/firefox/common/.mozilla/firefox/* \
 .config/google-chrome/* \
 .config/discord/* \
+.config/atomic/* \
