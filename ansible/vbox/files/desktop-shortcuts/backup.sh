@@ -1,6 +1,6 @@
 mkdir -p /media/sf_VBoxShared/${HOSTNAME};
 cd ~;
-tar -czf /media/sf_VBoxShared/${HOSTNAME}/webbkp-`date -I`.tgz \
+tar -czf /media/sf_VBoxShared/${HOSTNAME}/${HOSTNAME}_`date -I`.tgz \
 .ssh/* \
 .electrum/* \
 .mozilla/firefox/* \
